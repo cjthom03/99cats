@@ -1,0 +1,59 @@
+<!-- cat => cat -->
+<!-- action_url -->
+
+<!-- condintional for our PATCH -->
+
+<!-- update button text -->
+<% action_url = cat.persisted? ? cat_url(cat) : cats_url %>
+<% html_verb = cat.persisted? ? "patch" : "post" %>
+<% button_text = cat.persisted? ? "Update" : "Create" %>
+<% select_color = cat.persisted? ? "" : "selected" %>
+
+
+<form action="<%= action_url %>" method="post">
+  <input type="hidden" name="_method" value=<%=html_verb%>>
+  <!-- #Label & input(text?) for Name -->
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="cat[name]" value="<%= cat.name%>">
+
+  <br>
+  <br>
+
+  <!-- #Label & input(date?) for Birthday -->
+  <label for="birthday">Birth Day:</label>
+  <input type="date" id="birthday" name="cat[birth_date]" value="<%= cat.birth_date%>">
+
+  <br>
+  <br>
+
+  <!-- #Label & input(select) for color -->
+  <label for="color">Please choose a color:</label><br>
+  <select name="cat[color]">
+    <option disabled <%=select_color%>>Choose a color</option>
+    <% Cat::COLORS.each do |col|%>
+    <% color_select=cat.color == col ? "selected" : "" %>
+      <option value="<%= col %>"<%= color_select %>><%= col %> </option>
+    <% end %>
+  </select>
+
+  <br>
+  <br>
+  <!-- #Label & input(radio buttons?) for Sex -->
+
+  <input type="radio" name="cat[sex]" id="male" value="M" <%=cat.sex == 'M' ? checked="checked" : "" %>>
+  <label for="male">Male</label><br>
+  <input type="radio" name="cat[sex]" id="female" value="F" <%=cat.sex == 'F' ? checked="checked" : "" %>>
+  <label for="female">Female</label><br><br>
+
+  <!-- #Label & input (textarea?) for description -->
+  <label for="description">Description</label><br>
+  <textarea rows="4" name="cat[description]" id="description" ><%= cat.description %></textarea><br><br>
+
+  <input type="submit" value="<%= button_text%> my kitty!!">
+
+</form>
+
+
+
+
+<!-- #submit button -->
